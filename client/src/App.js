@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
+import "./App.css";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
-function App() {
+import RecipeDetails from "./path/RecipeDetails";
+import AddRecipe from "./path/AddRecipe";
+import Recipe from "./path/Recipe";
+import Navbar from "./component/navbar";
+ 
+const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navbar />,
+    children: [
+      { path: "/", element: <Recipe /> },
+      { path: "/:id/:title", element: <RecipeDetails /> },
+      { path: "/add-recipe", element: <AddRecipe /> },
+      { path: "*", element: <Navigate to="/" replace /> },
+    ],
+  },
+]);
+
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RouterProvider router={routes} />
     </div>
   );
 }
-
-export default App;
